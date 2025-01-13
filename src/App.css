@@ -298,3 +298,7 @@ select{
   font-size: 20px;
   font-weight: 600;
 }
+.custom-tooltip1 p{
+  color: #000;
+  opacity: 1;
+}

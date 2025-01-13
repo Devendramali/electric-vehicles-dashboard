@@ -14,7 +14,33 @@ const CustomTooltip = ({ active, payload, label }) => {
   }
   return null;
 };
+const aggregateMakeCounts = (data) => {
+  const makeCounts = {};
 
+  data.forEach((item) => {
+    const make = item['Make'];
+    if (make) {
+      makeCounts[make] = (makeCounts[make] || 0) + 1;
+    }
+  });
+
+  return Object.keys(makeCounts).map((make) => ({
+    name: make,
+    count: makeCounts[make],
+  }));
+};
+const CustomTooltip1 = ({ active, payload }) => {
+  if (active && payload && payload.length) {
+    const { name, count } = payload[0].payload;
+    return (
+      <div className="custom-tooltip1" style={{ backgroundColor: '#fff', border: '1px solid #ccc', padding: '10px' }}>
+        <p style={{ margin: 0 }}><strong>Manufacturer:</strong> {name}</p>
+        <p style={{ margin: 0 }}><strong>Vehicle Count:</strong> {count}</p>
+      </div>
+    );
+  }
+  return null;
+};
 const Dashboard = ({ evData }) => {
   // const [evData, setEvData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,6 +48,7 @@ const Dashboard = ({ evData }) => {
   const [selectedYear, setSelectedYear] = useState("2024");
   const [uniqueYears, setUniqueYears] = useState([]);
   const [bestModel, setBestModel] = useState(null);
+  const makeCountsData = aggregateMakeCounts(evData);
 
 
 const handleYearChange = (event) => {
@@ -243,6 +270,28 @@ useEffect(() => {
           />
         </ResponsiveContainer>
 
+      </div>
+      <div className="charts d-block">
+        
+        <ResponsiveContainer width="100%" height={400}>
+        <h2>Number of Vehicles by Manufacturer (Make):</h2>
+          <BarChart
+            data={makeCountsData}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+            <YAxis />
+            <Tooltip content={<CustomTooltip1 />} />
+            <Legend />
+            <Bar dataKey="count" fill="#8884d8" />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
     </main>
   );
