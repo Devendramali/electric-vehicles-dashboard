@@ -37,7 +37,7 @@ Ensure you have the following installed on your system:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo-name/electric-vehicles-dashboard.git
+   git clone https://github.com/Devendramali/electric-vehicles-dashboard.git
    ```
 
 2. Navigate to the project directory:
