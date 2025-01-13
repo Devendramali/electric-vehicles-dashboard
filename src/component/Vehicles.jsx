@@ -6,20 +6,7 @@ const Vehicles = ({ evData }) => {
   
   const uniqueMakes = [...new Set(evData.map(vehicle => vehicle.Make))];
 
- 
-//   const uniqueModelsWithRange = selectedMake
-//     ? Array.from(
-//         new Map(
-//           evData
-//             .filter(vehicle => vehicle.Make === selectedMake)
-//             .map(vehicle => [   vehicle.Model, { 
-//                 Model: vehicle.Model,
-//                 ElectricRange: vehicle['Electric Range'] || 'N/A', 
-//                 Year: vehicle['Model Year'], 
-//             }])
-//         ).values()
-//       )
-//     : [];
+
 const modelCounts = selectedMake
 ? evData
     .filter(vehicle => vehicle.Make === selectedMake)

@@ -173,10 +173,6 @@ body {
 .card:nth-child(8) {
   background-color: #0288d1;
 }
-
-/* Add more as needed */
-
-
 .card-inner {
   display: flex;
   align-items: center;
@@ -195,10 +191,6 @@ body {
   height: 300px;
 }
 
-/* End Main  */
-
-
-/* Medium <= 992px */
   
 @media screen and (max-width: 992px) {
   .grid-container {
@@ -221,7 +213,6 @@ body {
     display: inline;
   }
 }
-/* Small <= 768px */
   
 @media screen and (max-width: 768px) {
   .main-cards {
@@ -247,7 +238,6 @@ body {
   }
 }
 
-/* src/App.css */
 .App {
   text-align: center;
 }
@@ -286,27 +276,17 @@ h3{
   margin-bottom: 20px;
   
 }
-.vihicles .filter-section label{}
 select{
-  /* background-color: transparent; */
-  /* color: #fff; */
   padding: 5px 10px;
   border: none;
   outline: none;
   margin-left: 10px;
 }
-.vihicles .table-container{}
-.vihicles .table-container table{}
-.vihicles .table-container table thead{}
 .vihicles .table-container table thead tr{
   color: #fff;
 }
-.vihicles .table-container table tbody{}
-.vihicles .table-container table tbody tr{
-  
-}
+
 .vihicles .table-container table tbody tr td{
-  /* border: 1px solid #fff; */
   color: #fff;
   
 }

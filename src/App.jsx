@@ -9,16 +9,14 @@ import Categories from "./component/Categories";
 
 function App() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
-  const [evData, setEvData] = useState([]); // State to hold the electric vehicle data
-  const [loading, setLoading] = useState(true); // State for loading status
-  const [error, setError] = useState(null); // State for error handling
-
-  // Function to toggle sidebar visibility
+  const [evData, setEvData] = useState([]); 
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(null); 
+  
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
   };
 
-  // Fetching data from the API
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -29,19 +27,18 @@ function App() {
 
         const data = await response.text();
         const parsedData = parseCSV(data);
-        setEvData(parsedData); // Store parsed data in state
+        setEvData(parsedData); 
       } catch (err) {
-        setError(err.message); // Handle errors
+        setError(err.message); 
       } finally {
-        setLoading(false); // Set loading to false once data is fetched
-        console.log("Data fetching complete:", evData);  // Debugging to check data
+        setLoading(false); 
+        console.log("Data fetching complete:", evData);  
       }
     };
 
     fetchData();
-  }, []); // Empty dependency array means this effect runs once on component mount
+  }, []); 
 
-  // CSV parsing logic
   const parseCSV = (csvText) => {
     const lines = csvText.split('\n').filter(line => line.trim() !== '');
     const headers = lines[0].split(',');
@@ -56,7 +53,6 @@ function App() {
     });
   };
 
-  // Handling loading and error states
   if (loading) {
     return <div>Loading data, please wait...</div>;
   }
@@ -72,10 +68,7 @@ function App() {
         <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar} />
 
         <Routes>
-          {/* Route for Home component */}
           <Route path="/" element={loading ? <div>Loading data...</div> :<Home evData={evData} />} />
-          
-          {/* Route for Vehicles component */}
           <Route path="/vehicles" element={loading ? <div>Loading data...</div> :<Vehicles evData={evData} />} />
           <Route path="/categories" element={loading ? <div>Loading data...</div> :<Categories evData={evData} />} />
         </Routes>

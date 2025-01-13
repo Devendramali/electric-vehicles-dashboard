@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 function Sidebar({ openSidebarToggle, OpenSidebar }) {
   const handleLinkClick = () => {
     if (openSidebarToggle) {
-      OpenSidebar(); // Close the sidebar when a link is clicked
+      OpenSidebar(); 
     }
   };
 

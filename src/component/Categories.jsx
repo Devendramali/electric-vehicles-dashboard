@@ -1,12 +1,11 @@
 import React from 'react';
 
 const Categories = ({ evData }) => {
-  // Group models by Electric Vehicle Type
   const groupedByType = evData.reduce((acc, vehicle) => {
     const type = vehicle['Electric Vehicle Type'];
     const Make = vehicle['Make'];
     if (!acc[type]) {
-      acc[type] = new Set(); // Use Set to ensure unique models
+      acc[type] = new Set(); 
     }
     acc[type].add(vehicle.Model);
     return acc;

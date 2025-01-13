@@ -3,7 +3,6 @@ import { BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill, BsFillBellFill }
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from 'recharts';
 import { PieChart } from 'react-minimal-pie-chart';
 
-// Custom Tooltip Component
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
@@ -24,87 +23,6 @@ const Dashboard = ({ evData }) => {
   const [uniqueYears, setUniqueYears] = useState([]);
   const [bestModel, setBestModel] = useState(null);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch('https://raw.githubusercontent.com/vedant-patil-mapup/analytics-dashboard-assessment/refs/heads/main/data-to-visualize/Electric_Vehicle_Population_Data.csv');
-  //       if (!response.ok) {
-  //         throw new Error('Data fetch failed');
-  //       }
-
-  //       const data = await response.text();
-  //       const parsedData = parseCSV(data);
-  //       setEvData(parsedData);
-  //     } catch (err) {
-  //       setError(err.message);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
-  // const parseCSV = (csvText) => {
-  //   const lines = csvText.split('\n').filter(line => line.trim() !== '');
-  //   const headers = lines[0].split(',');
-
-  //   return lines.slice(1).map(line => {
-  //     const row = line.split(',');
-  //     let obj = {};
-  //     row.forEach((item, index) => {
-  //       obj[headers[index]] = item.trim();
-  //     });
-  //     return obj;
-  //   });
-  // };
-// ********************************************************************************
-
-// const handleYearChange = (event) => {
-//   const year = event.target.value;
-//   setSelectedYear(year);
-
-//   if (year) {
-//     const filteredData = evData.filter((item) => item['Model Year'] === year);
-//     const best = filteredData.reduce((prev, curr) => {
-//       const prevRange = parseInt(prev['Electric Range'], 10) || 0;
-//       const currRange = parseInt(curr['Electric Range'], 10) || 0;
-//       return currRange > prevRange ? curr : prev;
-//     }, {});
-
-//     setBestModel(best);
-//   } else {
-//     setBestModel(null);
-//   }
-// };
-
-// const aggregateByYear = (data) => {
-//   const aggregated = {};
-
-//   data.forEach((item) => {
-//     const year = item['Model Year'];
-//     const electricRange = parseInt(item['Electric Range'], 10);
-
-//     if (!isNaN(electricRange) && electricRange > 0) {
-//       if (!aggregated[year]) {
-//         aggregated[year] = { totalRange: 0, count: 0 };
-//       }
-//       aggregated[year].totalRange += electricRange;
-//       aggregated[year].count += 1;
-//     }
-//   });
-
-//   return Object.keys(aggregated).map((year) => ({
-//     name: year,
-//     averageRange: aggregated[year].totalRange / aggregated[year].count,
-//   }));
-// };
-
-// useEffect(() => {
-//   const years = [...new Set(evData.map((item) => item['Model Year']))];
-//   years.sort((a, b) => a - b);
-//   setUniqueYears(years);
-// }, [evData]);
 
 const handleYearChange = (event) => {
   const year = event.target.value;
@@ -123,7 +41,6 @@ const handleYearChange = (event) => {
   }
 };
 
-// Aggregating data by year to calculate average range (if needed)
 const aggregateByYear = (data) => {
   const aggregated = {};
 
@@ -146,13 +63,11 @@ const aggregateByYear = (data) => {
   }));
 };
 
-// Fetch and set unique years from the data on mount
 useEffect(() => {
   const years = [...new Set(evData.map((item) => item['Model Year']))];
   years.sort((a, b) => a - b);
   setUniqueYears(years);
 
-  // Show the best model for the default year (2024) on initial load
   const initialFilteredData = evData.filter((item) => item['Model Year'] === "2024");
   const initialBest = initialFilteredData.reduce((prev, curr) => {
     const prevRange = parseInt(prev['Electric Range'], 10) || 0;
@@ -162,33 +77,9 @@ useEffect(() => {
   setBestModel(initialBest); // Set the best model for 2024
 }, [evData]);
 
-// ********************************************************************************
-  // const aggregateByYear = (data) => {
-  //   const aggregated = {};
-
-  //   data.forEach(item => {
-  //     const year = item['Model Year'];
-  //     const electricRange = parseInt(item['Electric Range'], 10);
-
-  //     if (!isNaN(electricRange) && electricRange > 0) {
-  //       if (!aggregated[year]) {
-  //         aggregated[year] = { totalRange: 0, count: 0 };
-  //       }
-  //       aggregated[year].totalRange += electricRange;
-  //       aggregated[year].count += 1;
-  //     }
-  //   });
-
-  //   return Object.keys(aggregated).map(year => ({
-  //     name: year,
-  //     averageRange: aggregated[year].totalRange / aggregated[year].count,
-  //   }));
-  // };
-
-
   const chartData = aggregateByYear(evData);
 
-  const totalVehicles = evData.length; // Example summary data
+  const totalVehicles = evData.length; 
   const totalMake = new Set(evData.map(item => item['Make'])).size;
   console.log(evData);
 
@@ -202,16 +93,12 @@ useEffect(() => {
   // const pbevCount = evData.filter(item => item['Electric Vehicle Type'] === 'Battery Electric Vehicle (BEV)').length;
 
 
-  // Count of BEVs
   const bevCount = evData.filter(item => item['Electric Vehicle Type'] === 'Battery Electric Vehicle (BEV)').length;
 
-  // Count of non-BEVs
   const nonBevCount = totalVehicles - bevCount;
 
-  // Percentage of BEVs
   const bevPercentage = ((bevCount / totalVehicles) * 100).toFixed(2);
 
-  // Percentage of non-BEVs
   const nonBevPercentage = ((nonBevCount / totalVehicles) * 100).toFixed(2);
 
   const totalCity = new Set(evData.map(item => item['City'])).size;
